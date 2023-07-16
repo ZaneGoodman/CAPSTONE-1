@@ -1,0 +1,29 @@
+PROPOSAL
+--------
+1. What goal will your website be designed to achieve?
+    This goal of this app is to propose random trivia questions to the user. Questions the user decides to save will be used to create pop quizes for the user on those saved questions. 
+
+2. What kind of users will visit your site? In other words, what is the demographic of
+your users?
+    The demographic of people that will use this site are those who wish to sharpen their trvia skills. Where I live there are a lot of resturants with trivia games for one night a week. This will help the many who attend these "get-togethers" better play the game. 
+
+3. What data do you plan on using? You may have not picked your actual API yet,
+which is fine, just outline what kind of data you would like it to contain.
+    So far the data I have chosen is an API called "Numbers". Though I might use different API's as well. These will provide the large amount of random trivia questions and answers neccassary to build this app.
+
+4. In brief, outline your approach to creating your project
+
+    a. What does your database schema look like?
+        Tables: Users(username, password, first_name), questions & answers(question, answer), saved questions(question&answer_id). 
+    b. What kinds of issues might you run into with your API?
+        The current API I am using is a simple one however it is soley based on trivia invloving numbers. I will most likley need to look into other triva API's to get a full scope of random questions. 
+
+    c. Is there any sensitive information you need to secure?
+        No
+    d. What functionality will your app include?
+        Sign up/Log in, category of questions the user would like to test themselves on, savablity of questions for later use, the usage of all saved questions to build a personal quiz for the user to test themselves.
+
+    e. What will the user flow look like?
+        Sign up/Log in, Home page showing the available categories. Once a category is chosen the page will redirect to a question page. One question will show at a time and for each one there will be a "show answer" & "next" button. Then a "save" & "next" button. The user can go back to pick a new category or move onto the quiz page. The quiz page will also list one question at a time with multiple choice options. At the end of the quiz the user will be able to see what they got wrong and correct. This will be some sort of class instance allowing the user to take multiple quizes and look back on previous quizes and compare. 
+    f. What features make your site more than CRUD? Do you have any stretch goals?
+        Providing personalized quizes for each user based on the questions they've picked. Also giving the availability to see all of the quizes they have taken, along with their score. 
