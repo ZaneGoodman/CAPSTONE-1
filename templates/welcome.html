@@ -1,3 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
+<p>
+    Welcome to Trivia Testing! <br>
+    Test your knoweldge and <br>
+    Beat the competition!
+
+</p>
+
+{% if g.user %}
+<form action="/random_questions"><button>Start!</button></form>
+<form action="/list_user_test"><button>My Test</button></form>
+<form action="/new_test"><button>New Test</button></form>
+{% endif %}
 {% endblock %}

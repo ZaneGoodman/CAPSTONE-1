@@ -63,7 +63,7 @@ class SavedQuestionsAndAnswers(db.Model):
 
     answer = db.Column(db.Text, unique=True, nullable=False)
 
-    user = db.relationship("User", backref="user_questions_answers")
+    
 
 
 class UserTestQuestions(db.Model):
@@ -91,7 +91,7 @@ class UserTest(db.Model):
 
     test_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
-    user_id: db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"))
 
     score = db.Column(db.Integer)
     # Possible Problem: I need to make sure that the backref for userTestQuestions wors for this table. I want to be able to call UserTest.test_questions and get all of the questions for this test instance.
