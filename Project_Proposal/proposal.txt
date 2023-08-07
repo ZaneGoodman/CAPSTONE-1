@@ -5,7 +5,7 @@ PROPOSAL
 
 2. What kind of users will visit your site? In other words, what is the demographic of
 your users?
-    The demographic of people that will use this site are those who wish to sharpen their trvia skills. Where I live there are a lot of resturants with trivia games for one night a week. This will help the many who attend these "get-togethers" better play the game. 
+    18-65 year olds
 
 3. What data do you plan on using? You may have not picked your actual API yet,
 which is fine, just outline what kind of data you would like it to contain.

@@ -1,3 +1,29 @@
 {% extends 'base.html' %}
+
 {% block content %}
+<div>
+    <h1 id="question">{{trivia_response.question}}</h1>
+    <h2 id="answer" hidden>{{trivia_response.answer}}</h2>
+</div>
+
+<div>
+    <button id="answer-btn">Show Answer</button>
+    <form action="/random_questions"><button>Next Question</button></form>
+    <form action="/random_questions"><button>Save Question</button></form>
+</div>
+
+
+
+
+
+
+{% block javascript %}
+<script>
+    let answerBtn = document.getElementById("answer-btn");
+    let answer = document.getElementById("answer");
+    answerBtn.addEventListener("click", function () {
+        answer.removeAttribute("hidden");
+    });
+</script>
+{% endblock %}
 {% endblock %}

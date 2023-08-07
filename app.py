@@ -104,11 +104,11 @@ def show_random_questions():
     question = json_resp[0]['question']
     answer = json_resp[0]['answer']
 
-    triva_response = {
+    trivia_response = {
         "question" : question,
         "answer" : answer
     }
-    return jsonify(triva_response)
+    return render_template("random_question.html", trivia_response=trivia_response)
 
     
 
