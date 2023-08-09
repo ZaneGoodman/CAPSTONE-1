@@ -9,7 +9,7 @@
 <div>
     <button id="answer-btn">Show Answer</button>
     <form action="/random_questions"><button>Next Question</button></form>
-    <form action="/random_questions"><button>Save Question</button></form>
+    <button id="save-question">Save Question</button>
 </div>
 
 
@@ -21,9 +21,25 @@
 <script>
     let answerBtn = document.getElementById("answer-btn");
     let answer = document.getElementById("answer");
+    let question = document.getElementById("question")
+    let saveBtn = document.getElementById("save-question")
+
     answerBtn.addEventListener("click", function () {
         answer.removeAttribute("hidden");
     });
+
+
+    async function sendData(e) {
+        e.preventDefault()
+        response = await axios.post("/save_question", data = { question: question.innerText, answer: answer.innerText })
+        alert("saved")
+        return response
+    }
+
+    saveBtn.addEventListener("click", sendData)
+
+
+
 </script>
 {% endblock %}
 {% endblock %}

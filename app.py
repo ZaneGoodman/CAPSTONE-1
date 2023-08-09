@@ -111,8 +111,39 @@ def show_random_questions():
     return render_template("random_question.html", trivia_response=trivia_response)
 
     
+@app.route('/save_question', methods=["POST"])
+def add_question_to_db():
+    question = request.json["question"]
+    answer = request.json["answer"]
+    new_saved_question = SavedQuestionsAndAnswers(user_id=g.user.id, question=question, answer=answer)
+    db.session.add(new_saved_question)
+    db.session.commit()
+    
+    return redirect('/random_questions')
+
+@app.route('/new_test_questions')
+def user_picks_test_questions():
+    saved_questions = SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.user_id == g.user.id).all()
+    return render_template("test/select_test_questions.html", saved_questions=saved_questions)
+    
+
+@app.route('/create_new_test', methods=["POST"])
+def create_new_test():
+    questions = request.form.getlist("question")
+    picked_questions = [SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.question == question).first() for question in questions]
+    new_test = UserTest(user_id=g.user.id)
+    db.session.add(new_test)
+    db.session.commit()
+    for question in picked_questions:
+        test_question = UserTestQuestions(user_id=g.user.id, test_id=new_test.test_id, question_answer_id=question.id)
+        db.session.add(test_question)
+        db.session.commit()
+    
+    return redirect(f'/test/{new_test.test_id}')
 
 
+@app.route('/test/<int:test_id>')
+def populate_each_test_question(test_id):
 
 # @app.route('/')
 # def test_api_routes():
