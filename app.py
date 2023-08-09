@@ -139,24 +139,67 @@ def create_new_test():
         db.session.add(test_question)
         db.session.commit()
     
-    return redirect(f'/test/{new_test.test_id}')
+    return redirect(f'/start_test/{new_test.test_id}')
 
 
-@app.route('/test/<int:test_id>')
-def populate_each_test_question(test_id):
+@app.route('/start_test/<int:test_id>')
+def start_test(test_id):
+    test_questions = (db.session.query(SavedQuestionsAndAnswers.question, SavedQuestionsAndAnswers.answer, UserTestQuestions.correct)
+     .filter(UserTestQuestions.test_id == test_id)
+     .join(UserTestQuestions).all())
+    # test question format : 
+    # [('I\'ve been referred to as "America\'s Home Improvement Guru" & "America\'s Handyman"','Bob Vila', None), etc, etc]
 
-# @app.route('/')
-# def test_api_routes():
-#     random_url = f"{API_BASE_URL}/api/random"
+    session["questions"] = test_questions
+    return redirect(f"/test/0")
+
+
+@app.route('/test/<int:question_index>')
+def populate_each_test_question(question_index):
+    questions = session["questions"]
+    if questions[question_index][2] == None:
+        next_question = SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.question == questions[question_index][0]).first()
+        return render_template("/test/test.html", question=next_question)
     
+@app.route('/test/answers/<int:question_id>')
+def check_test_answer(question_id):
+    answer = request.form["answer"]
+    question = SavedQuestionsAndAnswers.query.get(question_id)
+    for curr_question in session["question"]:
+        if curr_question[0] == question.question:
+            if answer == question.answer:
+                test_question = UserTestQuestions.query.filter(UserTestQuestions.question_answer_id == question_id).first()
+                test_question.correct = True
 
-#     random_resp = requests.get(random_url)
+# As of now I am checking if the question from the question id passed from the form mathces that question in session, then checking if the answer is correct and then changing the test question "correct" table name to True. Becuase of this I will have to empty the session and re-initialize the session to update the questions "correct" attribute. I cannot mannually change that in the session becuase the session is an sqlachemy object and it wont allow me. This is a lot. I Have it this way to keep querying to a minimum. The question at hand is would it be better to try something different by using my table relationships(if that would work), which causes a hell of a lot of querying. Or keep it this way and re-initialize the session every time a question is answered. Or figure out a way to keep the session seperate from being an sqlalchemy object so I can simply check that the answer is correct and then update the database. I dont know. must think.
+
+    return redirect('/test/<int:question_idex>')
+     
+    
+# q = (db.session.query(SavedQuestionsAndAnswers.question, SavedQuestionsAndAnswers.answer).join(UserTestQuestions).all())
 
 
-#     rr = random_resp.json()
-#     question = rr[0]['question']
-#     answer = rr[0]['answer']
-   
+# def phone_dir_join():
+#     """Show employees with a join."""
 
-#     return render_template('welcome.html', question=question, answer=answer)
-# API_BASE_URL = "https://jservice.io"
+#     emps = (db.session.query(Employee.name,
+#                              Department.dept_name,
+#                              Department.phone)
+#             .join(Department).all())
+
+#     for name, dept, phone in emps:  # [(n, d, p), (n, d, p)]
+#         print(name, dept, phone)
+
+
+# def phone_dir_join_class():
+#     """Show employees with a join.
+
+#     This second version doesn't just get a list of data tuples,
+#     but a list of tuples of classes.
+#     """
+
+#     emps = (db.session.query(Employee, Department)
+#             .join(Department).all())
+
+#     for emp, dept in emps:  # [(<E>, <D>), (<E>, <D>)]
+#         print(emp.name, dept.dept_name, dept.phone)
