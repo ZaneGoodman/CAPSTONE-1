@@ -141,14 +141,24 @@ def create_new_test():
     
     return redirect(f'/start_test/{new_test.test_id}')
 
+def convert_data_to_list(test_questions):
+    converted_data = []
+    for question in test_questions:
+        q = [i for i in question]
+        converted_data.append(q)
+    
+    return converted_data
+
 
 @app.route('/start_test/<int:test_id>')
 def start_test(test_id):
-    test_questions = (db.session.query(SavedQuestionsAndAnswers.question, SavedQuestionsAndAnswers.answer, UserTestQuestions.correct)
+    db_questions = (db.session.query(SavedQuestionsAndAnswers.question, SavedQuestionsAndAnswers.answer, UserTestQuestions.correct)
      .filter(UserTestQuestions.test_id == test_id)
      .join(UserTestQuestions).all())
+    test_questions = convert_data_to_list(db_questions)
+
     # test question format : 
-    # [('I\'ve been referred to as "America\'s Home Improvement Guru" & "America\'s Handyman"','Bob Vila', None), etc, etc]
+    # [['I\'ve been referred to as "America\'s Home Improvement Guru" & "America\'s Handyman"','Bob Vila', None], [etc], [etc]]
 
     session["questions"] = test_questions
     return redirect(f"/test/0")
@@ -161,19 +171,32 @@ def populate_each_test_question(question_index):
         next_question = SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.question == questions[question_index][0]).first()
         return render_template("/test/test.html", question=next_question)
     
-@app.route('/test/answers/<int:question_id>')
+@app.route('/test/answers/<int:question_id>', methods=["POST"])
 def check_test_answer(question_id):
     answer = request.form["answer"]
+    
     question = SavedQuestionsAndAnswers.query.get(question_id)
-    for curr_question in session["question"]:
+  
+    test_question = UserTestQuestions.query.filter(UserTestQuestions.question_answer_id == question_id).first()
+    
+    for curr_question in session["questions"]:
+        index = session["questions"].index(curr_question)
         if curr_question[0] == question.question:
+            
             if answer == question.answer:
-                test_question = UserTestQuestions.query.filter(UserTestQuestions.question_answer_id == question_id).first()
+                curr_question[2] = True
                 test_question.correct = True
-
-# As of now I am checking if the question from the question id passed from the form mathces that question in session, then checking if the answer is correct and then changing the test question "correct" table name to True. Becuase of this I will have to empty the session and re-initialize the session to update the questions "correct" attribute. I cannot mannually change that in the session becuase the session is an sqlachemy object and it wont allow me. This is a lot. I Have it this way to keep querying to a minimum. The question at hand is would it be better to try something different by using my table relationships(if that would work), which causes a hell of a lot of querying. Or keep it this way and re-initialize the session every time a question is answered. Or figure out a way to keep the session seperate from being an sqlalchemy object so I can simply check that the answer is correct and then update the database. I dont know. must think.
-
-    return redirect('/test/<int:question_idex>')
+                db.session.commit()
+            if answer != question.answer:
+                curr_question[2] = False
+                test_question.correct = False
+                db.session.commit()
+        
+        if (index + 1) > (len(session["questions"]) + 1):
+                return redirect("/completed")
+        
+        return redirect(f'/test/{index + 1}')
+    
      
     
 # q = (db.session.query(SavedQuestionsAndAnswers.question, SavedQuestionsAndAnswers.answer).join(UserTestQuestions).all())
