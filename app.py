@@ -144,22 +144,18 @@ def create_new_test():
 def convert_data_to_list(test_questions):
     converted_data = []
     for question in test_questions:
-        q = [i for i in question]
+        q = {"question": question[0], "correct": question[1], "test_id": question[2]}
         converted_data.append(q)
     
     return converted_data
 
-
 @app.route('/start_test/<int:test_id>')
 def start_test(test_id):
-    db_questions = (db.session.query(SavedQuestionsAndAnswers.question, SavedQuestionsAndAnswers.answer, UserTestQuestions.correct)
+    db_questions = (db.session.query(SavedQuestionsAndAnswers.question, UserTestQuestions.correct, UserTestQuestions.test_id)
      .filter(UserTestQuestions.test_id == test_id)
      .join(UserTestQuestions).all())
     test_questions = convert_data_to_list(db_questions)
-
-    # test question format : 
-    # [['I\'ve been referred to as "America\'s Home Improvement Guru" & "America\'s Handyman"','Bob Vila', None], [etc], [etc]]
-
+    
     session["questions"] = test_questions
     return redirect(f"/test/0")
 
@@ -167,37 +163,73 @@ def start_test(test_id):
 @app.route('/test/<int:question_index>')
 def populate_each_test_question(question_index):
     questions = session["questions"]
-    if questions[question_index][2] == None:
-        next_question = SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.question == questions[question_index][0]).first()
-        return render_template("/test/test.html", question=next_question)
+    if (question_index) > (len(questions) -1):
+        
+        return redirect("/completed")
+    else:
+        next_question = SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.question == questions[question_index]["question"]).first()
+        
+        return render_template("/test/test.html", question=next_question, index=question_index)
     
 @app.route('/test/answers/<int:question_id>', methods=["POST"])
 def check_test_answer(question_id):
     answer = request.form["answer"]
     
     question = SavedQuestionsAndAnswers.query.get(question_id)
-  
-    test_question = UserTestQuestions.query.filter(UserTestQuestions.question_answer_id == question_id).first()
     
+   
     for curr_question in session["questions"]:
         index = session["questions"].index(curr_question)
-        if curr_question[0] == question.question:
+        test_id = curr_question["test_id"]
+        test_question = UserTestQuestions.query.filter(UserTestQuestions.question_answer_id == question_id, UserTestQuestions.test_id == test_id).first()
+
+        if curr_question['correct'] == None:
             
-            if answer == question.answer:
-                curr_question[2] = True
-                test_question.correct = True
-                db.session.commit()
-            if answer != question.answer:
-                curr_question[2] = False
-                test_question.correct = False
-                db.session.commit()
-        
-        if (index + 1) > (len(session["questions"]) + 1):
-                return redirect("/completed")
-        
-        return redirect(f'/test/{index + 1}')
-    
+            if curr_question["question"] == question.question:
+                
+                if answer == question.answer:
+                    curr_question["correct"] = True
+                    session.modified = True
+                    test_question.correct = True
+                    db.session.add(test_question)
+                    db.session.commit()
+                    
+                if answer != question.answer:
+                    curr_question["correct"] = False
+                    session.modified = True
+                    test_question.correct = False
+                    db.session.commit()
+            
+            
+            return redirect(f'/test/{index + 1}')
      
+                
+
+@app.route('/completed')
+def test_completed():
+    test_id = session["questions"][0]["test_id"]
+    score = get_test_score(test_id)
+    return render_template("test/completed_test.html", score=score)
+        
+
+def get_test_score(test_id):
+
+    true_false_answers = UserTestQuestions.query.filter(UserTestQuestions.test_id == test_id).all()
+    answers = [answer.correct for answer in true_false_answers]
+    test = UserTest.query.get(test_id)
+
+    score = (len([ a for a in answers if a == 'true']) / len(answers)) * 100
+    test.score = score
+    db.session.commit()
+    return score
+
+ 
+
+@app.route('/my_test')
+def list_users_test():
+    all_user_test = UserTest.query.filter(UserTest.user_id == g.user.id).all()
+    return render_template("test/list_test.html", all_user_test=all_user_test)
+
     
 # q = (db.session.query(SavedQuestionsAndAnswers.question, SavedQuestionsAndAnswers.answer).join(UserTestQuestions).all())
 

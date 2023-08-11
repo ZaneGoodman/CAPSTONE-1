@@ -3,7 +3,14 @@
 <h1>{{question.question}}</h1>
 <form action="/test/answers/{{question.id}}" method="POST">
     <label for="answer">{{question.answer}}</label>
-    <input type="radio" name="answer" value="{{question.answer}}">
+    <input type="radio" name="answer" value="{{question.answer}}" required>
+    {% if question.question == session["questions"][-1]["question"] %}
+    <button>Finish</button>
+    {% else %}
     <button>Next</button>
+    {% endif %}
 </form>
+{% if question.question != session["questions"][0]["question"] %}
+<form action="/test/{{index - 1}}"><Button>Back</Button></form>
+{% endif %}
 {% endblock %}
