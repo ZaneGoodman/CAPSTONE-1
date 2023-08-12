@@ -5,6 +5,8 @@ from forms import AuthenticateUserForm
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 import requests
+import random
+from json.decoder import JSONDecodeError
 
 API_BASE_URL = "https://jservice.io"
 CURR_USER_KEY = "curr_user"
@@ -100,7 +102,7 @@ def show_random_questions():
     random_url = f"{API_BASE_URL}/api/random"
     resp = requests.get(random_url)
     json_resp = resp.json()
-
+    
     question = json_resp[0]['question']
     answer = json_resp[0]['answer']
 
@@ -110,6 +112,23 @@ def show_random_questions():
     }
     return render_template("random_question.html", trivia_response=trivia_response)
 
+def get_three_fake_answers():
+    random_url = f"{API_BASE_URL}/api/random"
+    resp = requests.get(random_url, params={"count": 3})
+    json_resp = resp.json()
+
+    fake_answers = []
+    try:
+        for i in json_resp:
+            a = i['answer']
+            fake_answers.append(a)
+
+        print(json_resp)
+        print(fake_answers)
+        return fake_answers
+    
+    except JSONDecodeError:
+        get_three_fake_answers()
     
 @app.route('/save_question', methods=["POST"])
 def add_question_to_db():
@@ -168,8 +187,12 @@ def populate_each_test_question(question_index):
         return redirect("/completed")
     else:
         next_question = SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.question == questions[question_index]["question"]).first()
-        
-        return render_template("/test/test.html", question=next_question, index=question_index)
+        answer = next_question.answer
+        possible_answers = get_three_fake_answers()
+        possible_answers.append(answer)
+        random.shuffle(possible_answers)
+
+        return render_template("/test/test.html", question=next_question, index=question_index, possible_answers=possible_answers)
     
 @app.route('/test/answers/<int:question_id>', methods=["POST"])
 def check_test_answer(question_id):
@@ -231,30 +254,7 @@ def list_users_test():
     return render_template("test/list_test.html", all_user_test=all_user_test)
 
     
-# q = (db.session.query(SavedQuestionsAndAnswers.question, SavedQuestionsAndAnswers.answer).join(UserTestQuestions).all())
-
-
-# def phone_dir_join():
-#     """Show employees with a join."""
-
-#     emps = (db.session.query(Employee.name,
-#                              Department.dept_name,
-#                              Department.phone)
-#             .join(Department).all())
-
-#     for name, dept, phone in emps:  # [(n, d, p), (n, d, p)]
-#         print(name, dept, phone)
-
-
-# def phone_dir_join_class():
-#     """Show employees with a join.
-
-#     This second version doesn't just get a list of data tuples,
-#     but a list of tuples of classes.
-#     """
-
-#     emps = (db.session.query(Employee, Department)
-#             .join(Department).all())
-
-#     for emp, dept in emps:  # [(<E>, <D>), (<E>, <D>)]
-#         print(emp.name, dept.dept_name, dept.phone)
+@app.route('/completed-test/<int:test_id>')
+def show_users_completed_test_instance(test_id):
+    questions = UserTestQuestions.query.filter(UserTestQuestions.test_id == test_id).all()
+    return render_template("test/show_old_test.html", questions=questions)

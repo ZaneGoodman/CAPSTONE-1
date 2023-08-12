@@ -2,8 +2,11 @@
 {% block content %}
 <h1>{{question.question}}</h1>
 <form action="/test/answers/{{question.id}}" method="POST">
-    <label for="answer">{{question.answer}}</label>
-    <input type="radio" name="answer" value="{{question.answer}}" required>
+    {% for answer in possible_answers %}
+    <label for="answer">{{answer}}</label>
+    <input type="radio" name="answer" value="{{answer}}" required>
+    {% endfor %}
+
     {% if question.question == session["questions"][-1]["question"] %}
     <button>Finish</button>
     {% else %}

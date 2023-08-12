@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Your Test</h1>
+<ol>
+    {% for question in questions %}
+    <div>
+        <li>
+            <p>{{question.question_answer.question}}</p>
+            <p><b>correct answer:</b> {{question.question_answer.answer}}</p>
+            {% if question.correct == "true" %}
+            <p>correct</p>
+            {% else %}
+            <p>incorrect</p>
+            {% endif %}
+
+        </li>
+    </div>
+    {% endfor %}
+</ol>
+<form action="/my_test"><button>Back</button></form>
+{% endblock %}
