@@ -5,6 +5,7 @@
     {% for answer in possible_answers %}
     <label for="answer">{{answer}}</label>
     <input type="radio" name="answer" value="{{answer}}" required>
+    <br>
     {% endfor %}
 
     {% if question.question == session["questions"][-1]["question"] %}
