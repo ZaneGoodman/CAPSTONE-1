@@ -28,6 +28,10 @@ debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
+db.create_all()
+
+# authentification
+
 @app.before_request
 def add_user_to_g():
     """If logged in, add current user to global object"""
@@ -91,7 +95,7 @@ def logout():
         
 
 
-
+# Welcome & random question routes
 @app.route('/')
 def welcome_page():
     """Welcome page"""
@@ -103,6 +107,10 @@ def welcome_page():
 @app.route('/random_questions', methods=["GET", "POST"])
 def show_random_questions():
     """Show user a random question and answer"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
     trivia_response = api_call_random_question()
     return render_template("random_question.html", trivia_response=trivia_response)
 
@@ -117,10 +125,14 @@ def add_question_to_db():
 
 
 
-
+# Test routes
 @app.route('/new_test_questions')
 def user_picks_test_questions():
     """Display questions from users saved questions. User picks which to test on"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
     saved_questions = SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.user_id == g.user.id).all()
     return render_template("test/select_test_questions.html", saved_questions=saved_questions)
     
@@ -131,6 +143,10 @@ def user_picks_test_questions():
 @app.route('/create_new_test', methods=["POST"])
 def create_new_test():
     """create new test"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
     test_id = create_new_test_with_user_questions()
     return redirect(f'/start_test/{test_id}')
 
@@ -140,6 +156,10 @@ def create_new_test():
 @app.route('/start_test/<int:test_id>')
 def start_test(test_id): 
     """get question data from test_id and add to session for index mapping"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
     test_questions = get_questions_for_test(test_id)
     session["questions"] = test_questions
     return redirect(f"/test/0")
@@ -150,6 +170,10 @@ def start_test(test_id):
 @app.route('/test/<int:question_index>')
 def populate_each_test_question(question_index):
     """Check if current question is the last question, if not, get next question and answer"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
     questions = session["questions"]
     if (question_index) > (len(questions) -1):
         
@@ -169,6 +193,10 @@ def populate_each_test_question(question_index):
 @app.route('/test/answers/<int:question_id>', methods=["POST"])
 def check_test_answer(question_id):
     """redirect to next question using session index"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
     try:
         index = check_answer_and_return_index(question_id)
         return redirect(f'/test/{index + 1}')
@@ -183,6 +211,10 @@ def check_test_answer(question_id):
 @app.route('/completed')
 def test_completed():
     """Completed test page, return score"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
     test_id = session["questions"][0]["test_id"]
     score = get_test_score(test_id)
     return render_template("test/completed_test.html", score=score)
@@ -193,6 +225,10 @@ def test_completed():
 @app.route('/my_test')
 def list_users_test():
     """List all test the user has taken"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
     all_user_test = UserTest.query.filter(UserTest.user_id == g.user.id).all()
     return render_template("test/list_test.html", all_user_test=all_user_test)
 
@@ -202,5 +238,8 @@ def list_users_test():
 @app.route('/completed-test/<int:test_id>')
 def show_users_completed_test_instance(test_id):
     """"List questions from a users test instance"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
     questions = UserTestQuestions.query.filter(UserTestQuestions.test_id == test_id).all()
     return render_template("test/show_old_test.html", questions=questions)
