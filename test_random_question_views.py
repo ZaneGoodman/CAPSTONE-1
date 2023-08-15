@@ -7,7 +7,7 @@
 
 import os
 from unittest import TestCase
-
+from flask import session
 from models import db, connect_db, User, SavedQuestionsAndAnswers, UserTest, UserTestQuestions
 
 # BEFORE we import our app, let's set an environmental variable
@@ -93,7 +93,11 @@ class RandomQuestionViewTestCase(TestCase):
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.testuser_id
 
-        resp = c.post('/save_question', data={"question":"how are you", "answer":"good"})
+        resp = c.post('/save_question', json={"question":"how are you", "answer":"good"})
+        all_questions = SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.user_id == sess[CURR_USER_KEY]).all()
+
+        self.assertEqual(len(all_questions), 1)
+        self.assertEqual(all_questions[0].question, "how are you" )
         
         
         

@@ -24,13 +24,13 @@ app.config["SQLALCHEMY_ECHO"] = True
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-app.config["SECRET_KEY"] = "SECRET!"
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
-db.create_all()
+# db.create_all()
 
 # authentification
 
