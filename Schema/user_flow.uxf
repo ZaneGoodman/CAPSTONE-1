@@ -1,4 +1,4 @@
-<diagram program="umletino" version="15.1"><zoom_level>6</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>474</x><y>192</y><w>192</w><h>174</h></coordinates><panel_attributes>Welcome page
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>573</x><y>126</y><w>224</w><h>203</h></coordinates><panel_attributes>Welcome page
 --
 bg=green
  Home                                                  Log in | sign up
@@ -17,7 +17,7 @@ Log in/sign up here!
 
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>684</x><y>192</y><w>180</w><h>174</h></coordinates><panel_attributes>Loged in Start page
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>818</x><y>126</y><w>210</w><h>203</h></coordinates><panel_attributes>Loged in Start page
 --
 bg=green
  Home                                                  Log Out
@@ -36,7 +36,7 @@ Start!
 My Test                                                       New Test
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>912</x><y>192</y><w>180</w><h>180</h></coordinates><panel_attributes>Random Questions
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1084</x><y>126</y><w>210</w><h>210</h></coordinates><panel_attributes>Random Questions
 --
 bg=green
 
@@ -59,7 +59,7 @@ Save Question
 
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>780</x><y>306</y><w>144</w><h>18</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>220;10;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>474</x><y>396</y><w>192</w><h>180</h></coordinates><panel_attributes>List of Users Test
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>930</x><y>259</y><w>168</w><h>21</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>220;10;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>573</x><y>364</y><w>224</w><h>210</h></coordinates><panel_attributes>List of Users Test
 --
 bg=green
  
@@ -77,15 +77,15 @@ Test example     score: 100
 
 New Test
 
-Random Test
 
 
 
 
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>330</y><w>60</w><h>126</h></coordinates><panel_attributes>lt=&lt;-
-</panel_attributes><additional_attributes>10;190;80;190;80;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>744</x><y>396</y><w>180</w><h>180</h></coordinates><panel_attributes>User picks question to test on
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>790</x><y>287</y><w>70</w><h>147</h></coordinates><panel_attributes>lt=&lt;-
+</panel_attributes><additional_attributes>10;190;80;190;80;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>888</x><y>364</y><w>210</w><h>210</h></coordinates><panel_attributes>User picks question to test on
 --
 bg=green
 Home                                                                              
@@ -103,11 +103,11 @@ Pick which ones you want to test on!
 * q5                                                       
 
 Start
-Random Test
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>834</x><y>330</y><w>18</w><h>78</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>588</x><y>516</y><w>168</w><h>18</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>260;10;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>948</x><y>396</y><w>186</w><h>180</h></coordinates><panel_attributes>Test Instance
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>993</x><y>287</y><w>21</w><h>91</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>706</x><y>504</y><w>196</w><h>21</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>260;10;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1126</x><y>364</y><w>217</w><h>210</h></coordinates><panel_attributes>Test Instance
 --
-bg=red
+bg=green
     Question 5/10                                                                          
  
 
@@ -125,9 +125,9 @@ d. example
 
 Back                                                           Next
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>840</x><y>534</y><w>120</w><h>18</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>180;10;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1164</x><y>396</y><w>186</w><h>180</h></coordinates><panel_attributes>Final Question
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1000</x><y>525</y><w>140</w><h>21</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>180;10;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1378</x><y>364</y><w>217</w><h>210</h></coordinates><panel_attributes>Final Question
 --
-bg=red
+bg=green
       Question 10/10                                                                          
  
 
@@ -145,12 +145,12 @@ d. example
 
 Back                                                           Submit
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1110</x><y>546</y><w>66</w><h>18</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1386</x><y>396</y><w>192</w><h>180</h></coordinates><panel_attributes>submitted test
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1315</x><y>539</y><w>77</w><h>21</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1637</x><y>364</y><w>224</w><h>210</h></coordinates><panel_attributes>submitted test
 --
 bg=green
 You scored 75%!
 
-Try again?    Go Home   All Test</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1128</x><y>528</y><w>72</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;100;10;100;30</additional_attributes></element><element><id>Relation</id><coordinates><x>558</x><y>540</y><w>480</w><h>66</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>780;60;780;90;10;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>828</x><y>552</y><w>198</w><h>48</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>310;40;310;60;10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1032</x><y>504</y><w>426</w><h>102</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;120;10;150;690;150;690;10</additional_attributes></element><element><id>Relation</id><coordinates><x>786</x><y>162</y><w>714</w><h>342</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;70;10;10;1170;10;1170;550</additional_attributes></element><element><id>Relation</id><coordinates><x>534</x><y>504</y><w>1002</w><h>108</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;120;10;160;1650;160;1650;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>240</x><y>192</y><w>204</w><h>174</h></coordinates><panel_attributes>Sign up
+    Go Home   All Test</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1336</x><y>518</y><w>84</w><h>35</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;100;10;100;30</additional_attributes></element><element><id>Relation</id><coordinates><x>937</x><y>91</y><w>819</w><h>399</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;70;10;10;1150;10;1150;550</additional_attributes></element><element><id>Relation</id><coordinates><x>643</x><y>490</y><w>1148</w><h>126</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;120;10;160;1620;160;1620;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>300</x><y>126</y><w>238</w><h>203</h></coordinates><panel_attributes>Sign up
 --
 bg=green
 
@@ -167,7 +167,7 @@ Password: _____________
 Enter
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>0</x><y>192</y><w>204</w><h>174</h></coordinates><panel_attributes>Log In
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>20</x><y>126</y><w>238</w><h>203</h></coordinates><panel_attributes>Log In
 --
 bg=green
 
@@ -189,4 +189,4 @@ Enter
 
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>288</y><w>366</w><h>102</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;130;10;150;590;150;590;10</additional_attributes></element><element><id>Relation</id><coordinates><x>426</x><y>288</y><w>180</w><h>108</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;130;10;160;280;160;280;10</additional_attributes></element><element><id>Relation</id><coordinates><x>432</x><y>162</y><w>360</w><h>54</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>580;70;580;10;10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>186</x><y>156</y><w>594</w><h>60</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>970;80;970;10;10;10;10;80</additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>244</x><y>238</y><w>427</w><h>119</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;130;10;150;590;150;590;10</additional_attributes></element><element><id>Relation</id><coordinates><x>517</x><y>238</y><w>210</w><h>126</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;130;10;160;280;160;280;10</additional_attributes></element><element><id>Relation</id><coordinates><x>524</x><y>91</y><w>420</w><h>63</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>580;70;580;10;10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>237</x><y>84</y><w>693</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>970;80;970;10;10;10;10;80</additional_attributes></element></diagram>

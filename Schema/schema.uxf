@@ -1,4 +1,4 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLPackage</id><coordinates><x>190</x><y>110</y><w>290</w><h>170</h></coordinates><panel_attributes>User 
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLPackage</id><coordinates><x>190</x><y>110</y><w>290</w><h>170</h></coordinates><panel_attributes>user 
 --
 id: Primary Key
 username: text(30), unique, not nullable
@@ -6,18 +6,18 @@ password: text(30), not nullable
 
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>660</x><y>130</y><w>340</w><h>170</h></coordinates><panel_attributes>Saved_Question&amp;Answers
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>660</x><y>130</y><w>340</w><h>170</h></coordinates><panel_attributes>saved_question_and_answers
 --
 id: Primary Key
 user_id: foreign key -&gt; Users
 question: text, unique, not nullable, on-delete:cascade
 answer: text, unique, not nullable, on-delete:cascade
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>660</x><y>430</y><w>300</w><h>180</h></coordinates><panel_attributes>UserTest
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>660</x><y>430</y><w>300</w><h>180</h></coordinates><panel_attributes>user_test
 --
 test_id: Primary Key
 user_id:  foreign key -&gt; Users, not nullable
 score: integer nullable
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>170</x><y>460</y><w>360</w><h>150</h></coordinates><panel_attributes>UserTestQuestions
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>170</x><y>460</y><w>360</w><h>150</h></coordinates><panel_attributes>user_test_questions
 --
 id: Primary Key
 user_id: foreign key -&gt; Users, not nullable
