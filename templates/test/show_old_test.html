@@ -7,7 +7,7 @@
         <li>
             <p>{{question.question_answer.question}}</p>
             <p><b>correct answer:</b> {{question.question_answer.answer}}</p>
-            {% if question.correct == "true" %}
+            {% if question.correct == "true" or question.correct == "t" or question.correct == True %}
             <p>correct</p>
             {% else %}
             <p>incorrect</p>

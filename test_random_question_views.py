@@ -1,34 +1,23 @@
 """Random Question Views tests."""
 
-# run these tests like:
-#
-#    FLASK_ENV=production python -m unittest test_message_views.py
 
 
 import os
 from unittest import TestCase
 from flask import session
-from models import db, connect_db, User, SavedQuestionsAndAnswers, UserTest, UserTestQuestions
+from models import db, User, SavedQuestionsAndAnswers
 
-# BEFORE we import our app, let's set an environmental variable
-# to use a different database for tests (we need to do this
-# before we import our app, since that will have already
-# connected to the database
+# setup test database
 
 os.environ['DATABASE_URL'] = "postgresql:///Trivia-test"
 
-
-# Now we can import app
+# import app 
 
 from app import app, CURR_USER_KEY
 
-# Create our tables (we do this here, so we only create the tables
-# once for all tests --- in each test, we'll delete the data
-# and create fresh new clean test data
 
 db.create_all()
 
-# Don't have WTForms use CSRF at all, since it's a pain to test
 
 app.config['WTF_CSRF_ENABLED'] = False
 
@@ -53,19 +42,15 @@ class RandomQuestionViewTestCase(TestCase):
                                     password="testuser2",)
         self.testuser2_id = 20
         self.testuser2.id = self.testuser2_id
-       
+        db.session.add_all([self.testuser, self.testuser2])
         db.session.commit()
        
 
     def tearDown(self):
         db.session.rollback()
 
-    def setup_questions(self):
-       SavedQuestionsAndAnswers(user_id=self.testuser_id,
-       question="How many licks does it take to get the the center of a tootsy pop?", answer="12")
-
     def test_welcome_page(self):
-
+        """While user is logged in, does welcome page work and show proper selections"""
         with self.client as c:
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.testuser.id
@@ -74,9 +59,21 @@ class RandomQuestionViewTestCase(TestCase):
             html = resp.get_data(as_text=True)
             
             self.assertEqual(resp.status_code, 200)
-            
-    def test_random_question(self):
+            self.assertIn("<button>Start!</button>", html)
 
+    def test_welcome_page_without_auth(self):
+        """When user is not logged in, does welcome page work and hide correct selections"""
+        with self.client as c:
+          
+            resp = c.get('/')
+            html = resp.get_data(as_text=True)
+            
+            self.assertEqual(resp.status_code, 200)
+            self.assertNotIn("<button>Start!</button>", html)
+            
+
+    def test_random_question(self):
+        """Test if a logged in user can use random question functionallity"""
         with self.client as c:
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.testuser_id
@@ -87,42 +84,30 @@ class RandomQuestionViewTestCase(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertIn('<button id="answer-btn">Show Answer</button>', html)
 
-    def test_save_question(self):
 
+    def test_random_question_without_auth(self):
+        """Test that a unauth user cannot see random questions"""
+        with self.client as c:
+          
+            resp = c.get('/random_questions', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertNotIn('<button id="answer-btn">Show Answer</button>', html)
+
+
+    def test_save_question(self):
+        """Test if a user can save a question """
         with self.client as c:
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.testuser_id
-
+        
         resp = c.post('/save_question', json={"question":"how are you", "answer":"good"})
         all_questions = SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.user_id == sess[CURR_USER_KEY]).all()
 
+        self.assertEqual(resp.status_code, 302)
         self.assertEqual(len(all_questions), 1)
         self.assertEqual(all_questions[0].question, "how are you" )
         
         
-        
-#     def welcome_page():
-#     """Welcome page"""
-#     return render_template('welcome.html')
-
-
-
-
-# @app.route('/random_questions', methods=["GET", "POST"])
-# def show_random_questions():
-#     """Show user a random question and answer"""
-#     if not g.user:
-#         flash("Access unauthorized.", "danger")
-#         return redirect("/")
-
-#     trivia_response = api_call_random_question()
-#     return render_template("random_question.html", trivia_response=trivia_response)
-
-
-
-    
-# @app.route('/save_question', methods=["POST"])
-# def add_question_to_db():
-#     """add saved question to the db"""
-#     add_saved_question_to_db()
-    # return redirect('/random_questions')
+ 

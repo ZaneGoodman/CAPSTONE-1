@@ -1,14 +1,13 @@
 # "Triva App"
 import os
-from flask import Flask, request, render_template, redirect, session, g , flash, jsonify
+from flask import Flask, render_template, redirect, session, g , flash, jsonify
 from models import db, connect_db, User, SavedQuestionsAndAnswers, UserTestQuestions, UserTest
 from forms import AuthenticateUserForm
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
-from helpers import api_call_random_question, get_three_fake_answers, add_saved_question_to_db, create_new_test_with_user_questions, convert_data_to_list, check_answer_and_return_index, get_test_score, get_questions_for_test, login_user, logout_user
-import requests
+from helpers import api_call_random_question, get_three_fake_answers, add_saved_question_to_db, create_new_test_with_user_questions, check_answer_and_return_index, get_test_score, get_questions_for_test, login_user, logout_user
 import random
-from json.decoder import JSONDecodeError
+
 
 API_BASE_URL = "https://jservice.io"
 CURR_USER_KEY = "curr_user"
@@ -30,7 +29,7 @@ debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
-# db.create_all()
+db.create_all()
 
 # authentification
 
@@ -43,6 +42,7 @@ def add_user_to_g():
 
     else:
         g.user = None
+
 
 
 
@@ -109,9 +109,9 @@ def welcome_page():
 @app.route('/random_questions', methods=["GET", "POST"])
 def show_random_questions():
     """Show user a random question and answer"""
-    # if not g.user:
-    #     flash("Access unauthorized.", "danger")
-    #     return redirect("/")
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
 
     trivia_response = api_call_random_question()
     return render_template("random_question.html", trivia_response=trivia_response)
@@ -237,7 +237,7 @@ def list_users_test():
     
 
 
-@app.route('/completed-test/<int:test_id>')
+@app.route('/completed_test/<int:test_id>')
 def show_users_completed_test_instance(test_id):
     """"List questions from a users test instance"""
     if not g.user:

@@ -1,10 +1,7 @@
-from flask import Flask, request, render_template, redirect, session, g , flash, jsonify
-from models import db, connect_db, User, SavedQuestionsAndAnswers, UserTestQuestions, UserTest
-from forms import AuthenticateUserForm
-from flask_debugtoolbar import DebugToolbarExtension
-from sqlalchemy.exc import IntegrityError
+from flask import  request, session, g 
+from models import db,  SavedQuestionsAndAnswers, UserTestQuestions, UserTest
+
 import requests
-import random
 from json.decoder import JSONDecodeError
 
 
@@ -101,8 +98,9 @@ def check_answer_and_return_index(question_id):
         index = session["questions"].index(curr_question)
         test_id = curr_question["test_id"]
         test_question = UserTestQuestions.query.filter(UserTestQuestions.question_answer_id == question_id, UserTestQuestions.test_id == test_id).first()
-
+        
         if curr_question['correct'] == None:
+            
             if curr_question["question"] == question.question:
                 check_if_true_or_false(answer, question, curr_question, test_question)
             return index
@@ -110,6 +108,7 @@ def check_answer_and_return_index(question_id):
 
 def check_if_true_or_false(answer ,correct_question, current_question, test_question):
     """Check if users answer is correct, commit to db"""
+    
     if answer == correct_question.answer:
         current_question["correct"] = True
         session.modified = True
@@ -126,10 +125,13 @@ def check_if_true_or_false(answer ,correct_question, current_question, test_ques
 def get_test_score(test_id):
     """Get all answers from test, populate score % and commit to db"""
     true_false_answers = UserTestQuestions.query.filter(UserTestQuestions.test_id == test_id).all()
+    print(true_false_answers)
     answers = [answer.correct for answer in true_false_answers]
+    print(answers)
     test = UserTest.query.get(test_id)
 
-    score = (len([ a for a in answers if a == 'true' or 't']) / len(answers)) * 100
+    score = ((len([ a for a in answers if a == 'true' or a == 't' or a == True]) / len(answers))) * 100
+    print(score)
     test.score = score
     db.session.commit()
     return score
