@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
+<div id="random-question">
     <h1 id="question">{{trivia_response.question}}</h1>
     <h2 id="answer" hidden>{{trivia_response.answer}}</h2>
 </div>
 
-<div>
-    <button id="answer-btn">Show Answer</button>
-    <form action="/random_questions"><button>Next Question</button></form>
-    <button id="save-question">Save Question</button>
+<div id="random-question-btns">
+    <button class="rand-btn btn btn-dark" id="answer-btn">Show Answer</button>
+    <button class="rand-btn btn btn-dark" id="save-question">Save Question</button>
+    <form action="/random_questions" class="rand-btn"><button class="btn btn-dark">Next Question</button></form>
 </div>
 
 

@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<p>
+<p class="welcome" >
     Welcome to Trivia Testing! <br>
-    Test your knoweldge and <br>
+    Test your knowledge and <br>
     Beat the competition!
 
 </p>
 
 {% if g.user %}
-<form action="/random_questions" method="POST"><button>Start!</button></form>
-<form action="/my_test"><button>My Test</button></form>
-<form action="/new_test_questions"><button>New Test</button></form>
+<div class="welcome-btns">
+<form action="/random_questions" method="POST" class="start-btn"><button class="btn btn-dark">Start!</button></form>
+<form action="/my_test" class="mytest-btn"><button class="btn btn-dark">My Test</button></form>
+<form action="/new_test_questions" class="newtest-btn"><button class="btn btn-dark">New Test</button></form>
+</div>
 {% endif %}
 {% endblock %}

@@ -1,0 +1,115 @@
+body {
+    background-color: rgb(210, 229, 248);
+}
+
+.navbar {
+    background-color: rgb(59, 57, 57)
+}
+
+.navbar-header {
+    border: black solid 1px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: black;
+    
+}
+.navbar-header span {
+    color: white;
+    font-family:'Caprasimo', cursive;
+    font-size: 15px;
+}
+
+.auth-btns {
+    margin-right: 100px;
+    font-family: 'Varela Round', sans-serif;
+}
+
+.auth-btns li {
+    margin: 10px
+}
+
+.welcome {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 25px;
+    font-weight: 500;
+    font-family:'Caprasimo', cursive;
+}
+
+/* .start-btn {
+    text-align: center;
+}
+
+.mytest-btn {
+    margin-left: 40%;
+
+}
+
+.newtest-btn {
+    margin-left: 80%;
+} */
+
+.welcome-btns form {
+    text-align: center;
+    margin: 20px;
+    font-family: 'Varela Round', sans-serif;
+}
+
+
+#random-question {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#question {
+    font-family:'Caprasimo', cursive;
+}
+
+#answer {
+    font-family: 'Varela Round', sans-serif;
+}
+
+
+#random-question-btns {
+    width:100%;
+    text-align: center;
+    margin-top: 15%;
+    position: fixed;
+    
+}
+
+.rand-btn {
+    display: inline-block;
+    margin: 10px;
+    font-family: 'Varela Round', sans-serif;
+    
+}
+
+#user-tests {
+    text-align: center;
+    margin-top: 20px;
+    font-family:'Caprasimo', cursive;
+}
+
+.list-group-item {
+    text-align: center;
+    margin: 2px;
+    width: 20rem;
+}
+
+#list-test{
+    text-align: center;
+}
+
+#list-test ol{
+    display: inline-block;
+    text-align: left;
+}
+#list-test ol li{
+    font-family: 'Varela Round', sans-serif;
+}
+
+.card-title, .card-text, .card-subtitle {
+    font-family: 'Varela Round', sans-serif;
+}
+

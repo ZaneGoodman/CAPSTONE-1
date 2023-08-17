@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Your Tests</h1>
-<div>
+<h1 id="user-tests">Your Tests</h1>
+<div id="list-test">
     <ol>
         {% for test in all_user_test %}
         <li>
-            <a href="/completed_test/{{test.test_id}}">
-                score = {{test.score}}
+            <a class="list-group-item list-group-item-action list-group-item-dark" href="/completed_test/{{test.test_id}}">
+                {{test.score}}%
             </a>
         </li>
         {% endfor %}
