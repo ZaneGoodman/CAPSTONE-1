@@ -1,21 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Your Test</h1>
-<ol>
+
+
+<h1 id="heading">Your Test Questions</h1>
+<div id="test-cards" class="row d-flex justify-content-center">
     {% for question in questions %}
-    <div>
-        <li>
-            <p>{{question.question_answer.question}}</p>
-            <p><b>correct answer:</b> {{question.question_answer.answer}}</p>
+    <div class="card questions" style="width: 18rem; -ms-flex-align: center;">
+        <div class="card-body">
+            <h5 class="card-title">{{question.question_answer.question}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted"><b>correct answer:</b> {{question.question_answer.answer}}</h6>
+
             {% if question.correct == "true" or question.correct == "t" or question.correct == True %}
-            <p>correct</p>
+            <p class="card-text correct">
+                Correct
+            </p>
             {% else %}
-            <p>incorrect</p>
+            <p class="card-text incorrect">
+                Inorrect
+            </p>
             {% endif %}
 
-        </li>
+        </div>
     </div>
     {% endfor %}
-</ol>
-<form action="/my_test"><button>Back</button></form>
+</div>
+<form action="/my_test"><button id="cards-back-btn" class="btn btn-dark">Back</button></form>
 {% endblock %}

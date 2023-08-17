@@ -2,14 +2,17 @@
 {% block content %}
 <h1>Select the questions you would like to test yourself on</h1>
 <form action="/create_new_test" method="POST">
-    <ul>
+    <div class="box">
         {% for question in saved_questions %}
-        <li>
-            <label for="question">{{question.question}}</label>
-            <input type="checkbox" name="question" id="question" value="{{question.question}}">
-        </li>
+
+        <div class="item">
+            <div class="checkbox-rect2">
+                <input type="checkbox" name="question" id="question checkbox-rect2" value="{{question.question}}">
+                <label for="question checkbox-rect2">{{question.question}}</label>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
     <button>Start Test</button>
 </form>
 {% endblock %}

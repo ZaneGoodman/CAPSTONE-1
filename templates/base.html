@@ -6,25 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia Nation!</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
     <script src="https://unpkg.com/jquery"></script>
-    <!-- <script src="https://unpkg.com/bootstrap"></script> -->
+
+
 </head>
 
 <body>
     <nav class="navbar navbar-expand">
         <div class="container-fluid">
-            <div class="navbar-header">
+            <div class="navbar-header btn btn-dark">
                 <a href="/" class="navbar-brand">
-                    <img src="/static/images/T.jpg" alt="Trivia Logo" width="50">
+                    <img src="/static/images/t_logo.jpg" alt="Trivia Logo" width="50">
                     <span>Triva Nation</span>
                 </a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right auth-btns">
                 {% if not g.user %}
-                <li><a href="/signup">Sign Up</a></li>
-                <li><a href="/login">Log In</a></li>
+                <li><a href="/signup" class="btn btn-dark">Sign Up</a></li>
+                <li><a href="/login" class="btn btn-dark">Log In</a></li>
                 {% else %}
-                <li><a href="/logout">Log Out</a></li>
+                <li><a href="/logout" class="btn btn-dark">Log Out</a></li>
                 {% endif %}
             </ul>
         </div>
