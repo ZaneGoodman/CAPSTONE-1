@@ -1,5 +1,6 @@
 body {
     background-color: rgb(210, 229, 248);
+    
 }
 
 .navbar {
@@ -36,18 +37,7 @@ body {
     font-family:'Caprasimo', cursive;
 }
 
-/* .start-btn {
-    text-align: center;
-}
 
-.mytest-btn {
-    margin-left: 40%;
-
-}
-
-.newtest-btn {
-    margin-left: 80%;
-} */
 
 .welcome-btns form {
     text-align: center;
@@ -61,11 +51,11 @@ body {
     margin-top: 20px;
 }
 
-#question {
+#question, .auth-headers{
     font-family:'Caprasimo', cursive;
 }
 
-#answer {
+.answer {
     font-family: 'Varela Round', sans-serif;
 }
 
@@ -85,7 +75,7 @@ body {
     
 }
 
-#user-tests {
+.user-tests {
     text-align: center;
     margin-top: 20px;
     font-family:'Caprasimo', cursive;
@@ -109,12 +99,14 @@ body {
     font-family: 'Varela Round', sans-serif;
 }
 
-.card-title, .card-text, .card-subtitle {
+.card-title, .card-text, .card-subtitle, .card-header{
     font-family: 'Varela Round', sans-serif;
 }
 
 .card {
     margin:5px;
+  
+   
     /* background-color: rgba(53, 51, 51, 0.199); */
 }
 
@@ -140,9 +132,14 @@ background-color: rgba(187, 238, 177, 0.466);
    
 }
 
- #cards-back-btn{
-    margin-left: 50px;
-    margin-top: 50px;
+ #cards-back-btn {
+    /* margin-left: 50px;
+    margin-top: 50px; */
+    
+    
+    margin-left: .5%;
+    display: inline-block;
+    position: relative;
 }
 
 #heading {
@@ -154,56 +151,50 @@ background-color: rgba(187, 238, 177, 0.466);
     padding: 2em;
   }
 .item {
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
   }
 
-  .checkbox-rect2 input[type="checkbox"] {
-    -webkit-appearance: none;
-    appearance: none;
-    /* For iOS < 15 to remove gradient background */
-    background-color: #fff;
-    /* Not removed via appearance */
-    margin: 0;
-  }
-  .checkbox-rect2 input[type="checkbox"] + label {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 20px;
-    font: 14px/20px "Open Sans", Arial, sans-serif;
-    cursor: pointer;
-    
-  }
-  .checkbox-rect2 input[type="checkbox"]:hover + label:hover {
-    color: rgb(23, 86, 228);
-  }
-  .checkbox-rect2 input[type="checkbox"]:hover + label:before { 
-    border: 1px solid #343a3f;
-    box-shadow: 2px 1px 0 #343a3f;
-  }
-  .checkbox-rect2 input[type="checkbox"] + label:last-child {
-    margin-bottom: 0;
-  }
-  .checkbox-rect2 input[type="checkbox"] + label:before {
-    content: "";
-    display: block;
-    width: 1.4em;
-    height: 1.4em;
-    border: 1px solid #343a3f;
-    border-radius: 0.2em;
-    position: absolute;
-    left: 0;
-    top: 0;
-    -webkit-transition: all 0.2s, background 0.2s ease-in-out;
-    transition: all 0.2s, background 0.2s ease-in-out;
-    background: rgba(255, 255, 255, 0.03);
-    box-shadow: -2px -1px 0 #343a3f;
-    background: #f3f3f3;
-  }
-  .checkbox-rect2 input[type="checkbox"]:checked + label:before {
-    border: 2px solid #fff;
-    border-radius: 0.3em;
-    background: #50565a;
-    box-shadow: 2px 1px 0 #50565a;
-  }
+.form-check-label {
+    font-family: 'Varela Round', sans-serif;
+}
 
+.questions-btn {
+    margin-left:1.75%;
+    margin-top: 10px;
+}
+
+#test-questions {
+    margin: 10px;
+  
+}
+
+.test-instance{
+    align-items: center;
+    margin: 0 auto; 
+    margin-bottom: 10px; 
+    margin-top: 4rem;
+    float: none; 
+}
+
+.answer-input {
+    margin-left: 10px
+}
+
+
+.auth-form {
+    margin: auto;
+    margin-top: 50px;
+    text-align: center;
+    align-items: center;
+    width: 20rem
+
+}
+
+ .form-group label {
+    margin-top: 20px;
+    font-family: 'Varela Round', sans-serif;
+}
+
+.start-btn {
+    margin-top: 20px;
+}

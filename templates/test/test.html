@@ -1,20 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{question.question}}</h1>
-<form action="/test/answers/{{question.id}}" method="POST">
-    {% for answer in possible_answers %}
-    <label for="answer">{{answer}}</label>
-    <input type="radio" name="answer" value="{{answer}}" required>
-    <br>
-    {% endfor %}
 
-    {% if question.question == session["questions"][-1]["question"] %}
-    <button>Finish</button>
-    {% else %}
-    <button>Next</button>
-    {% endif %}
-</form>
-{% if question.question != session["questions"][0]["question"] %}
-<form action="/test/{{index - 1}}"><Button>Back</Button></form>
-{% endif %}
+<div class="test-instance card " style="width: 40rem;">
+    <div class="card-header">
+        Question# {{index +1}}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title text-center">{{question.question}}</h5>
+    </div>
+    <form action="/test/answers/{{question.id}}" method="POST">
+        {% for answer in possible_answers %}
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="radio" name="answer" value="{{answer}}" required>
+                    <label for="answer" class="answer answer-input">{{answer}}</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+        <div class="card-body">
+            {% if question.question != session["questions"][0]["question"] %}
+            <form action="/test/{{index - 1}}"><Button class="btn btn-light">Back</Button></form>
+            {% endif %}
+            {% if question.question == session["questions"][-1]["question"] %}
+            <button class="btn btn-dark">Finish</button>
+            {% else %}
+            <button class="btn btn-dark">Next</button>
+            {% endif %}
+
+
+        </div>
+</div>
+
+
+
 {% endblock %}

@@ -3,6 +3,7 @@
 
 
 <h1 id="heading">Your Test Questions</h1>
+<form action="/my_test"><button id="cards-back-btn" class="btn btn-dark">Back</button></form>
 <div id="test-cards" class="row d-flex justify-content-center">
     {% for question in questions %}
     <div class="card questions" style="width: 18rem; -ms-flex-align: center;">
@@ -24,5 +25,5 @@
     </div>
     {% endfor %}
 </div>
-<form action="/my_test"><button id="cards-back-btn" class="btn btn-dark">Back</button></form>
+
 {% endblock %}
