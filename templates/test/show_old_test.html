@@ -3,7 +3,11 @@
 
 
 <h1 id="heading">Your Test Questions</h1>
-<form action="/my_test"><button id="cards-back-btn" class="btn btn-dark">Back</button></form>
+<div id="card-btn-container">
+    <form action="/my_test"><button class="cards-btns btn btn-dark">Back</button></form>
+    <form action="/delete_test/{{test_id}}" method="POST"><button class="cards-btns btn btn-dark ">Delete</button>
+    </form>
+</div>
 <div id="test-cards" class="row d-flex justify-content-center">
     {% for question in questions %}
     <div class="card questions" style="width: 18rem; -ms-flex-align: center;">
@@ -17,7 +21,7 @@
             </p>
             {% else %}
             <p class="card-text incorrect">
-                Inorrect
+                Incorrect
             </p>
             {% endif %}
 

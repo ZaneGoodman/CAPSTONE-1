@@ -132,16 +132,16 @@ background-color: rgba(187, 238, 177, 0.466);
    
 }
 
- #cards-back-btn {
-    /* margin-left: 50px;
-    margin-top: 50px; */
-    
-    
-    margin-left: .5%;
-    display: inline-block;
-    position: relative;
+
+.cards-btns {
+    margin: 5px;
 }
 
+
+#card-btn-container {
+    margin-left: 2%;
+    display: flex;
+}
 #heading {
     text-align: center;
     margin: 20px;
@@ -210,4 +210,13 @@ background-color: rgba(187, 238, 177, 0.466);
 
 #completed-container button {
     margin: 10px
+}
+
+.alert-error {
+    background-color: rgba(235, 13, 13, 0.205);
+    font-family: 'Varela Round', sans-serif;
+}
+
+.alert-success {
+    font-family: 'Varela Round', sans-serif;
 }

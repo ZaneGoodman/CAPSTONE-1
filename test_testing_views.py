@@ -98,7 +98,7 @@ class RandomQuestionViewTestCase(TestCase):
             html = resp.get_data(as_text=True)
             
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<label for="question">How many licks does it take to get the the center of a tootsy pop?</label>', html)
+            self.assertIn('value="How many licks does it take to get the the center of a tootsy pop?"', html)
               
     def test_create_new_test_with_picked_questions(self):
         """Test if a new test instance is created with the questions the user picked"""
@@ -149,7 +149,7 @@ class RandomQuestionViewTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<form action="/"><button>Go Home</button></form>', html)
+            self.assertIn('<form action="/"><button class="btn btn-dark">Go Home</button></form>', html)
 
     def test_test_shows_next_question(self):
         """Test if the next question in a test instance will populate once the previous question has been answered"""
@@ -166,7 +166,7 @@ class RandomQuestionViewTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<h1>2+2</h1>', html)
+            self.assertIn('<h5 class="card-title text-center">2+2</h5>', html)
 
     def test_check_true_test_answer(self):
         """Check if the db and session update to "true" when user answers test question corrrectly"""
@@ -235,7 +235,8 @@ class RandomQuestionViewTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn( 'score = 50', html)
+            self.assertIn( '50%', html)
+            
             
     def test_list_questions_from_completed_test(self):
         """Check that the user can see the questions and if they were correct/incorrect for their completed test """
@@ -249,10 +250,32 @@ class RandomQuestionViewTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn( '<p>How tall is the empire state building?</p>', html)
-            self.assertIn( '<p>correct</p>', html)
-            self.assertIn( '<p>2+2</p>', html)
-            self.assertIn( '<p>incorrect</p>', html)
+            self.assertIn( '<h5 class="card-title">How tall is the empire state building?</h5>', html)
+            self.assertIn( 'Correct', html)
+            self.assertIn( '<h5 class="card-title">2+2</h5>', html)
+            self.assertIn( 'Incorrect', html)
+
+    def test_delete_test_instance(self):
+        """Check that the test instance is deleted on delete, check that the questions for that test is not deleted"""
+        self.setup_completed_test()
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.testuser_id
+
+            c.get("/start_test/15")
+            c.get("/completed")
+
+            self.assertEqual(len(UserTest.query.filter(UserTest.user_id == sess[CURR_USER_KEY]).all()), 1)
+
+            test_questions = UserTestQuestions.query.filter(UserTestQuestions.test_id == 15).all()
+            question_id = test_questions[0].question_answer.question
+
+            c.get("/completed_test/15")
+            resp = c.delete('/delete_test/15')
+            html = resp.get_data(as_text=True)
+            
+            self.assertEqual(len(UserTest.query.filter(UserTest.user_id == sess[CURR_USER_KEY]).all()), 0)
+            self.assertEqual(question_id, "How tall is the empire state building?")
 
     
 

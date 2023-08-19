@@ -59,7 +59,7 @@ class RandomQuestionViewTestCase(TestCase):
             html = resp.get_data(as_text=True)
             
             self.assertEqual(resp.status_code, 200)
-            self.assertIn("<button>Start!</button>", html)
+            self.assertIn('<button class="btn btn-dark">Start!</button>', html)
 
     def test_welcome_page_without_auth(self):
         """When user is not logged in, does welcome page work and hide correct selections"""
@@ -69,7 +69,7 @@ class RandomQuestionViewTestCase(TestCase):
             html = resp.get_data(as_text=True)
             
             self.assertEqual(resp.status_code, 200)
-            self.assertNotIn("<button>Start!</button>", html)
+            self.assertNotIn('<button class="btn btn-dark">Start!</button>', html)
             
 
     def test_random_question(self):
@@ -82,7 +82,7 @@ class RandomQuestionViewTestCase(TestCase):
         html = resp.get_data(as_text=True)
 
         self.assertEqual(resp.status_code, 200)
-        self.assertIn('<button id="answer-btn">Show Answer</button>', html)
+        self.assertIn('<button class="rand-btn btn btn-dark" id="answer-btn">Show Answer</button>', html)
 
 
     def test_random_question_without_auth(self):

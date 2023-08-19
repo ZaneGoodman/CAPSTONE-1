@@ -39,7 +39,7 @@
 
     <div class="container">
         {% for category, message in get_flashed_messages(with_categories=True) %}
-        <div class="alert alert-{{ category }}">{{ message }}</div>
+        <div class="alert alert-{{ category }}" style="text-align: center;">{{ message }}</div>
         {% endfor %}
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"

@@ -149,8 +149,15 @@ def create_new_test():
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
+
     test_id = create_new_test_with_user_questions()
+    if test_id == None:
+        flash("Required input not entered, please select a question(s)", "error")
+        return redirect("/new_test_questions")
     return redirect(f'/start_test/{test_id}')
+   
+
+    
 
 
 
@@ -244,4 +251,18 @@ def show_users_completed_test_instance(test_id):
         flash("Access unauthorized.", "danger")
         return redirect("/")
     questions = UserTestQuestions.query.filter(UserTestQuestions.test_id == test_id).all()
-    return render_template("test/show_old_test.html", questions=questions)
+    return render_template("test/show_old_test.html", questions=questions, test_id=test_id)
+
+
+@app.route('/delete_test/<int:test_id>', methods=['POST'])
+def delete_test_instance(test_id):
+    """Delete test instance"""
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    
+    test = UserTest.query.get(test_id)
+    db.session.delete(test)
+    db.session.commit()
+
+    return redirect('/my_test')

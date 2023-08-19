@@ -1,4 +1,4 @@
-from flask import Flask, request, session, g 
+from flask import Flask, request, session, g, flash, redirect
 from models import db,  SavedQuestionsAndAnswers, UserTestQuestions, UserTest
 
 import requests
@@ -29,8 +29,8 @@ def api_call_random_question():
         resp = requests.get(random_url)
         json_resp = resp.json()
         
-        question = json_resp[0]['question']
-        answer = json_resp[0]['answer']
+        question = delete_html_elements_from_str(str(json_resp[0]['question']))
+        answer = delete_html_elements_from_str(str(json_resp[0]['answer']))
 
         trivia_response = {
             "question" : question,
@@ -49,7 +49,7 @@ def get_three_fake_answers():
     fake_answers = []
     try:
         for i in json_resp:
-            a = i['answer']
+            a = delete_html_elements_from_str(str(i['answer']))
             fake_answers.append(a)
 
         return fake_answers
@@ -57,10 +57,20 @@ def get_three_fake_answers():
     except JSONDecodeError:
         get_three_fake_answers()
 
+def delete_html_elements_from_str(string):
+    """Delete the random html elements attached to the data from the api"""
+    replacements = [("<i>", ""), ("</i>", "")]
+    for char, replacement in replacements:
+        if char in string:
+            string = string.replace(char, replacement)
+        
+    return string
+
 def add_saved_question_to_db():
     """When user saves a question, add it to the db"""
-    question = request.json["question"]
-    answer = request.json["answer"]
+    question = delete_html_elements_from_str(str(request.json["question"]))
+    
+    answer = delete_html_elements_from_str(str(request.json["answer"]))
     new_saved_question = SavedQuestionsAndAnswers(user_id=g.user.id, question=question, answer=answer)
     db.session.add(new_saved_question)
     db.session.commit()
@@ -70,15 +80,23 @@ def add_saved_question_to_db():
 def create_new_test_with_user_questions():
     """Get picked questions from user and add them to saved question, make a new test. Commit all to db"""
     questions = request.form.getlist("question")
+   
     picked_questions = [SavedQuestionsAndAnswers.query.filter(SavedQuestionsAndAnswers.question == question).first() for question in questions]
-    new_test = UserTest(user_id=g.user.id)
-    db.session.add(new_test)
-    db.session.commit()
-    for question in picked_questions:
-        test_question = UserTestQuestions(user_id=g.user.id, test_id=new_test.test_id, question_answer_id=question.id)
-        db.session.add(test_question)
+
+    if len(picked_questions) > 0:
+        new_test = UserTest(user_id=g.user.id)
+        db.session.add(new_test)
         db.session.commit()
-    return new_test.test_id
+        for question in picked_questions:
+            test_question = UserTestQuestions(user_id=g.user.id, test_id=new_test.test_id, question_answer_id=question.id)
+            db.session.add(test_question)
+            db.session.commit()
+        return new_test.test_id
+    else:
+        return None
+        
+       
+        
 
 def convert_data_to_list(test_questions):
     """Convert passed in data to array of objects"""
