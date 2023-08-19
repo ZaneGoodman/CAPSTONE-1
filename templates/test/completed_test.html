@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>You scored {{score}}!</h1>
-<div>
-    <form action="/"><button>Go Home</button></form>
-    <form action="/my_test"><button>Your Test</button></form>
+<div id="completed-container">
+    <h1>You scored {{score}}!</h1>
+
+    <form action="/"><button class="btn btn-dark">Go Home</button></form> 
+    <form action="/my_test"><button class="btn btn-dark">Your Test</button></form>
 </div>
 {% endblock %}

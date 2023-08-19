@@ -198,3 +198,16 @@ background-color: rgba(187, 238, 177, 0.466);
 .start-btn {
     margin-top: 20px;
 }
+
+#completed-container {
+    margin: auto;
+    margin-top: 50px;
+    text-align: center;
+    align-items: center;
+    
+
+}
+
+#completed-container button {
+    margin: 10px
+}
