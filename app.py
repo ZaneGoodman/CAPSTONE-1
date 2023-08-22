@@ -2,6 +2,7 @@
 import os
 from flask import Flask, render_template, redirect, session, g , flash, jsonify
 from models import db, connect_db, User, SavedQuestionsAndAnswers, UserTestQuestions, UserTest
+from user_service_model import UserServiceModel
 from forms import AuthenticateUserForm
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
@@ -52,7 +53,7 @@ def login():
     form = AuthenticateUserForm()
 
     if form.validate_on_submit():
-        user = User.authenticate(form.username.data,form.password.data)
+        user = UserServiceModel.__authenticate__(form.username.data,form.password.data)
         if user:
             login_user(user)
             flash(f"Welcome {user.username}", "success")
@@ -70,7 +71,7 @@ def signup():
     form = AuthenticateUserForm()
     if form.validate_on_submit():
         try:
-            user = User.register(username=form.username.data, password=form.password.data)
+            user = UserServiceModel.__register__(username=form.username.data, password=form.password.data)
             db.session.add(user)
             db.session.commit()
 

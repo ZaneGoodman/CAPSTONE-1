@@ -6,7 +6,7 @@ import os
 from unittest import TestCase
 from flask import session
 from models import db, User, SavedQuestionsAndAnswers
-
+from user_service_model import UserServiceModel
 # setup test database
 
 os.environ['DATABASE_URL'] = "postgresql:///Trivia-test"
@@ -33,12 +33,12 @@ class RandomQuestionViewTestCase(TestCase):
 
         self.client = app.test_client()
 
-        self.testuser = User.register(username="testuser",
+        self.testuser = UserServiceModel.__register__(username="testuser",
                                     password="testuser",)
         self.testuser_id = 10
         self.testuser.id = self.testuser_id
 
-        self.testuser2 = User.register(username="testuser2",
+        self.testuser2 = UserServiceModel.__register__(username="testuser2",
                                     password="testuser2",)
         self.testuser2_id = 20
         self.testuser2.id = self.testuser2_id

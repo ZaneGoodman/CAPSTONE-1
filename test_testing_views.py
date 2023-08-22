@@ -6,7 +6,7 @@ import os
 from unittest import TestCase
 from flask import session
 from models import db, SavedQuestionsAndAnswers, UserTest, UserTestQuestions, User
-
+from user_service_model import UserServiceModel
 # setup test database
 
 os.environ['DATABASE_URL'] = "postgresql:///Trivia-test"
@@ -38,12 +38,12 @@ class RandomQuestionViewTestCase(TestCase):
 
         self.client = app.test_client()
 
-        self.testuser = User.register(username="testuser",
+        self.testuser = UserServiceModel.__register__(username="testuser",
                                     password="testuser",)
         self.testuser_id = 10
         self.testuser.id = self.testuser_id
 
-        self.testuser2 = User.register(username="testuser2",
+        self.testuser2 = UserServiceModel.__register__(username="testuser2",
                                     password="testuser2",)
         self.testuser2_id = 20
         self.testuser2.id = self.testuser2_id
@@ -271,7 +271,7 @@ class RandomQuestionViewTestCase(TestCase):
             question_id = test_questions[0].question_answer.question
 
             c.get("/completed_test/15")
-            resp = c.delete('/delete_test/15')
+            resp = c.post('/delete_test/15')
             html = resp.get_data(as_text=True)
             
             self.assertEqual(len(UserTest.query.filter(UserTest.user_id == sess[CURR_USER_KEY]).all()), 0)
