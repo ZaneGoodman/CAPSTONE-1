@@ -1,6 +1,6 @@
 from flask_bcrypt import Bcrypt
 from models import db, connect_db, User
-import requests
+from flask import requests
 bcrypt = Bcrypt()
 
 class UserServiceModel(requests.auth.AuthBase):
